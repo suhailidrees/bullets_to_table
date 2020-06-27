@@ -52,7 +52,7 @@
 		<main role="main" class="flex-shrink-0">
 
 			<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
-				<a href="#" class="navbar-brand" style="margin-right: 0; font-size: 2.75rem">Bullets to Table</a>
+				<a href="#" name="self-link" class="navbar-brand" style="margin-right: 0; font-size: 2.75rem">Bullets to Table</a>
 
 			</nav>
 
@@ -151,7 +151,7 @@
 		    	</div>
 		    	
 		    	<div class="col-2 d-flex justify-content-end">
-			    	<a class="text-muted text-center mx-3" target="_blank" href="https://github.com/suhail93/bullets_to_table" style="margin-bottom:0;"><i class="fab fa-github" style="font-size:1.5rem"></i></a>
+			    	<a name="GitHub" class="text-muted text-center mx-3" target="_blank" href="https://github.com/suhail93/bullets_to_table" style="margin-bottom:0;"><i class="fab fa-github" style="font-size:1.5rem"></i></a>
 				</div>
 
 			</div>
@@ -162,7 +162,7 @@
 
 
 
-<!-- Google Analytics Tag 1 of 2 -- Remove if using outside bulletstotable.com -->
+<!-- Google Analytics Tag 1 of 3 -- Remove if using outside bulletstotable.com -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-64997028-7"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -170,7 +170,7 @@
   gtag('js', new Date());
   gtag('config', 'UA-64997028-7');
 </script>
-<!-- Google Analytics Tag 1 of 2 END -->
+<!-- Google Analytics Tag 1 of 3 END -->
 
 <script src="sources/jquery-3.5.1.min.js"></script>
 
@@ -262,10 +262,16 @@
 		$("#copy-svg-check").removeClass("d-none");
 		$("#copy-to-clipboard").addClass("d-none");
 		$("#copied").removeClass("d-none");
-		/////////////////////// Google Analytics Tag 2 of 2 -- Remove if using outside bulletstotable.comm //////////////////////
+		/////////////////////// Google Analytics Tag 2 of 3 -- Remove if using outside bulletstotable.comm //////////////////////
 		gtag('event', "copy to clipboard");	
-		/////////////////////// END Google Analytics Tag 2 of 2 -- Remove if using outside bulletstotable.comm //////////////////////
+		/////////////////////// END Google Analytics Tag 2 of 3 -- Remove if using outside bulletstotable.comm //////////////////////
 	}
+
+	/////////////////////// Google Analytics Tag 3 of 3 -- Remove if using outside bulletstotable.comm //////////////////////
+	$(document).on("click", "a", function() {
+		gtag('event', "link clicked - " + $(this).attr("name"));	
+	});
+	/////////////////////// Google Analytics Tag 3 of 3 -- Remove if using outside bulletstotable.comm //////////////////////
 
 
 	function get_lines_and_indents() {
