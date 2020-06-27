@@ -162,7 +162,15 @@
 
 
 
-
+<!-- Google Analytics Tag 1 of 2 -- Remove if using outside bulletstotable.com -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-64997028-7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-64997028-7');
+</script>
+<!-- Google Analytics Tag 1 of 2 END -->
 
 <script src="sources/jquery-3.5.1.min.js"></script>
 
@@ -254,6 +262,9 @@
 		$("#copy-svg-check").removeClass("d-none");
 		$("#copy-to-clipboard").addClass("d-none");
 		$("#copied").removeClass("d-none");
+		/////////////////////// Google Analytics Tag 2 of 2 -- Remove if using outside bulletstotable.comm //////////////////////
+		gtag('event', "copy to clipboard");	
+		/////////////////////// END Google Analytics Tag 2 of 2 -- Remove if using outside bulletstotable.comm //////////////////////
 	}
 
 
