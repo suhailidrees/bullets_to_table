@@ -97,8 +97,9 @@
 					</div>
 
 					<div class="col-10 d-flex justify-content-center">
-						<svg class="bi bi-triangle-fill" width="1em" height="4em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" transform='rotate(180 0 0)'>
-						  <path fill-rule="evenodd" d="M7.022 1.566a1.13 1.13 0 0 1 1.96 0l6.857 11.667c.457.778-.092 1.767-.98 1.767H1.144c-.889 0-1.437-.99-.98-1.767L7.022 1.566z"/>
+						
+						<i class="fas fa-caret-down" style="font-size:2rem; margin:20px"></i>
+						
 						</svg>
 					</div>
 					<div class="col-1">
@@ -151,6 +152,8 @@
 		    	</div>
 		    	
 		    	<div class="col-2 d-flex justify-content-end">
+		    		<a name="Blog" class="text-muted text-center mx-3" target="_blank" href="https://suhailidrees.com/?src=b2t" style="margin-bottom:0;"><i class="fas fa-link" style="font-size:1.5rem"></i></a>
+		    		<a name="LinkedIn" class="text-muted text-center mx-3" target="_blank" href="https://www.linkedin.com/in/suhail-idrees-926657a8/" style="margin-bottom:0;"><i class="fab fa-linkedin" style="font-size:1.5rem"></i></a>
 			    	<a name="GitHub" class="text-muted text-center mx-3" target="_blank" href="https://github.com/suhail93/bullets_to_table" style="margin-bottom:0;"><i class="fab fa-github" style="font-size:1.5rem"></i></a>
 				</div>
 
@@ -276,17 +279,57 @@
 
 	function get_lines_and_indents() {
 		var temp = input;
+
+		// find all bad tags (e.g. bold, italic, underline)
+
+		var allowed_tags = ["<ol>", "</ol>", "<ul>", "</ul>", "<li>", "</li>"];
+		var disallowed_tags_found = [];
+		var current_index = 0;
+		var reached_end_1 = false;
+		while (reached_end_1 == false) {
+			var indexOf_any_tag_open = temp.indexOf("<");
+			var indexOf_any_tag_close = temp.indexOf(">");
+
+			if (indexOf_any_tag_open < 0) {
+				reached_end_1 = true;
+			}
+			else {
+				var this_tag = temp.substring(indexOf_any_tag_open, indexOf_any_tag_close + 1);
+				if (allowed_tags.includes(this_tag.toLowerCase())) {
+					// all good, this tag is allowed
+					console.log("this tag is allowed");
+				}
+				else {
+					// this tag is not allowed (e.g. strong, i, b, u)
+					// add it to the list
+					disallowed_tags_found.push(this_tag)
+					
+				}
+				temp = temp.substring(indexOf_any_tag_open + this_tag.length);
+			}
+		}
+
+		// remove all the bad tags that were found
+		var temp = input; // restart from the input string, now that we have located the bad tags
+
+		for (var i = 0; i < disallowed_tags_found.length; i++) {
+			temp = temp.replace(disallowed_tags_found[i], "");
+		}
+
+
 		var current_indent_level = 0;
-		var reached_end = false;
+		var reached_end_2 = false;
 		lines = [];
 		indents = [];
-		while (reached_end == false) {
+		while (reached_end_2 == false) {
 			var indexOf_ul_open = temp.indexOf("<ul>");
 			var indexOf_ul_close = temp.indexOf("</ul>");
 			var indexOf_ol_open = temp.indexOf("<ol>");
 			var indexOf_ol_close = temp.indexOf("</ol>");
 			var indexOf_li_open = temp.indexOf("<li>");
 			var indexOf_li_close = temp.indexOf("</li>");
+			var indexOf_any_tag_open = temp.indexOf("<"); //used for ignoring all other tags
+			var indexOf_any_tag_close = temp.indexOf(">"); //used for ignoring all other tags
 
 			if (indexOf_ul_open < 0) {
 				indexOf_ul_open = 10000;
@@ -306,13 +349,19 @@
 			if (indexOf_li_close < 0) {
 				indexOf_li_close = 10000;
 			}
+			if (indexOf_any_tag_open < 0) {
+				indexOf_any_tag_open = 10000;
+			}
+			if (indexOf_any_tag_close < 0) {
+				indexOf_any_tag_close = 10000;
+			}
 
-			var min_index = Math.min(indexOf_ul_open, indexOf_ul_close, indexOf_ol_open, indexOf_ol_close, indexOf_li_open, indexOf_li_close);
+			var min_index = Math.min(indexOf_ul_open, indexOf_ul_close, indexOf_ol_open, indexOf_ol_close, indexOf_li_open, indexOf_li_close, indexOf_any_tag_open, indexOf_any_tag_close);
 
 			console.log(temp);
 
 			if (min_index == 10000) {
-				reached_end = true;
+				reached_end_2 = true;
 				break;
 			}
 
@@ -349,9 +398,15 @@
 				// ignore and move on
 				temp = temp.substring(min_index + 5); // 5 is the length of the tag
 			}
+/*			else if (indexOf_any_tag_open == min_index) {  ////////////////////////////// if reached this point, then no list tags are present ////////////
+				// ignore this non-list tag and move on
+				console.log("ignoring this random tag:");
+				console.log(temp.substring(indexOf_any_tag_open, indexOf_any_tag_close + 1)); 
+				temp = temp.substring(indexOf_any_tag_close + 1); 
+			}*/
 
 			if (temp.trim().length == 0) {
-				reached_end = true;
+				reached_end_2 = true;
 			}
 
 		}
