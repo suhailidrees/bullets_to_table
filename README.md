@@ -3,4 +3,4 @@ Convert a bullet list into a table. I take my notes in bullet form on MS OneNote
 
 See working example at [BulletsToTable.com](https://bulletstotable.com)
 
-_Note: If re-using, remove 2x Google Analytics tags from index.html_
+_Note: If re-using, remove 3x Google Analytics tags from index.html_
